@@ -4,17 +4,22 @@ import java.util.List;
 import java.util.spi.ToolProvider;
 import java.util.stream.Stream;
 
-record Project() {
+record Project(Path archive) {
   static Project ofCurrentWorkingDirectory() {
-    return new Project();
+    return new Project(Path.of("web", "demo.jar"));
   }
 
   void build() throws Exception {
     var classes = Files.createTempDirectory("classes-");
     run("javac", "-d", classes, "--release=11", "--module-source-path=src/*/main", "--module=demo");
-    run("jar", "--create", "--file=demo.jar", "--main-class=demo.Main", "-C", classes.resolve("demo"), ".");
-    run("jar", "--describe-module", "--file=demo.jar");
-    run("jar", "--list", "--file=demo.jar");
+    run("jar", "--create", "--file=" + archive, "--main-class=demo.Main", "-C", classes.resolve("demo"), ".");
+    run("jar", "--describe-module", "--file=" + archive);
+    run("jar", "--list", "--file=" + archive);
+  }
+
+  void start() throws Exception {
+    if (Files.notExists(archive)) build();
+    run("java", "-jar", archive);
   }
 
   private void run(String name, Object... arguments) {
