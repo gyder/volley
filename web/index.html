@@ -10,9 +10,6 @@
     (async function () {
       await cheerpjInit({version: 11});
       cheerpjCreateDisplay(800, 600);
-      console.log(`${location.pathname}`)
-      console.log(`${location.pathname.replace(/[^/]*$/, '')}`)
-      console.log(`${location.pathname.replace(/[^/]*$/, '')}demo.jar`)
       await cheerpjRunJar(`/app${location.pathname.replace(/[^/]*$/, '')}demo.jar`);
     })();
     </script>
