@@ -11,7 +11,7 @@ public class Main {
     var frame = new JFrame("bach-demo-cheerpj");
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setSize(400, 300);
-    frame.getContentPane().add(new JLabel("bach-demo-cheerpj", SwingConstants.CENTER));
+    frame.getContentPane().add(new JLabel(frame.getSize().toString(), SwingConstants.CENTER));
     frame.setLocationRelativeTo(null);
     frame.setVisible(true);
   }
