@@ -18,7 +18,7 @@ public class Main {
   private static void createAndShowGUI() {
     var frame = new JFrame("bach-demo-cheerpj");
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    frame.setSize(400, 300);
+    frame.setSize(640, 480);
     frame.getContentPane().add(new JScrollPane(new JTextArea(computeText())));
     frame.setLocationRelativeTo(null);
     frame.setVisible(true);

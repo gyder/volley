@@ -1,17 +1,26 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="utf-8"/>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <title>bach-demo-cheerpj</title>
     <script src="https://cjrtnc.leaningtech.com/4.0/loader.js"></script>
+    <style>
+        html, body {
+          margin: 0;
+        }
+        #container {
+          width: 100vw;
+          height: 100svh;
+        }
+    </style>
   </head>
   <body>
-    <script>
-    (async function () {
-      await cheerpjInit({version: 11});
-      cheerpjCreateDisplay(800, 600);
-      await cheerpjRunJar(`/app${location.pathname.replace(/[^/]*$/, '')}demo.jar`);
-    })();
+  <div id="container"></div>
+    <script type="module">
+    await cheerpjInit({version: 11});
+    cheerpjCreateDisplay(-1, -1, document.getElementById("container"));
+    await cheerpjRunJar(`/app${location.pathname.replace(/[^/]*$/, '')}demo.jar`);
     </script>
   </body>
 </html>
