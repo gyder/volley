@@ -1,12 +1,12 @@
 package demo;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.lang.module.ModuleDescriptor;
 import java.lang.module.ModuleFinder;
 import java.lang.module.ModuleReference;
 import java.nio.file.Path;
 import java.util.function.Consumer;
+import java.awt.Graphics;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -18,19 +18,23 @@ public class Main {
   }
 
   private static void createAndShowGUI() {
-    var panel = new JPanel();
-    panel.setOpaque(true);
-    panel.setBackground(Color.MAGENTA);
-    panel.setPreferredSize(new Dimension(640, 480));
-
     var frame = new JFrame("bach-demo-cheerpj");
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setUndecorated(true);
-    frame.getContentPane().add(panel);
+    frame.getContentPane().add(new Starfield());
     frame.pack();
     frame.setLocationRelativeTo(null);
     frame.setVisible(true);
     frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+  }
+
+  static class Starfield extends JPanel {
+    public void paintComponent(Graphics graphics) {
+      graphics.setColor(Color.BLACK);
+      graphics.fillRect(0, 0, getWidth(), getHeight());
+      graphics.setColor(Color.ORANGE);
+      graphics.drawString("Here be star traces...",getWidth()/2,getHeight()/2);
+    }
   }
 
   private static void spoolSystemInformation(Consumer<String> printer) {
