@@ -1,5 +1,9 @@
+import java.lang.module.ModuleDescriptor;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 record Project(Path archive) implements ToolRunner {
   static Project ofCurrentWorkingDirectory() {
@@ -8,10 +12,19 @@ record Project(Path archive) implements ToolRunner {
   }
 
   void build() throws Exception {
+    var now = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
     var classes = Files.createTempDirectory("classes-");
-    var classesDemo = classes.resolve("demo");
     run("javac", "-d", classes, "--release=11", "--module-source-path=src/*/main", "--module=demo");
-    run("jar", "--create", "--file=" + archive, "--main-class=demo.Main", "-C", classesDemo, ".");
+    run(
+        "jar",
+        "--create",
+        "--file=" + archive,
+        "--module-version",
+            ModuleDescriptor.Version.parse(DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(now)),
+        "--main-class=demo.Main",
+        "-C",
+            classes.resolve("demo"),
+        ".");
     run("jar", "--describe-module", "--file=" + archive);
     run("jar", "--list", "--file=" + archive);
   }
