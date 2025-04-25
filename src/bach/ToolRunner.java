@@ -25,6 +25,7 @@ interface ToolRunner {
       var builder = new ProcessBuilder(program.toString());
       builder.command().addAll(List.of(args));
       var process = builder.inheritIO().start();
+      Runtime.getRuntime().addShutdownHook(new Thread(process::destroy));
       var code = process.waitFor();
       if (code == 0) return;
       throw new Error(name + " returned non-zero exit code: " + code);
