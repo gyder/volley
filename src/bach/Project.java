@@ -23,6 +23,7 @@ record Project(Path archive) implements ToolRunner {
 
   void serve() throws Exception {
     if (Files.notExists(archive)) build();
-    run("java", "--module", "jdk.httpserver", "--directory", archive.getParent().toAbsolutePath());
+    var folder = archive.getParent().toAbsolutePath();
+    run("java", "--module", "jdk.httpserver", "--output", "verbose", "--directory", folder);
   }
 }
