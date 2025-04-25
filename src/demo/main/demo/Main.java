@@ -37,6 +37,12 @@ public class Main {
       joiner.add(exception.getMessage());
     }
     joiner.add("");
+    ModuleLayer.boot().modules().stream()
+        .map(Module::getDescriptor)
+        .sorted()
+        .map(ModuleDescriptor::toNameAndVersion)
+        .forEach(joiner::add);
+    joiner.add("");
     System.getProperties().stringPropertyNames().stream()
         .sorted()
         .forEach(key -> joiner.add(key + " -> " + System.getProperty(key)));
