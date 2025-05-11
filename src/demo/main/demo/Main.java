@@ -73,7 +73,7 @@ class MyPanel extends JPanel {
     
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.setColor(Color.RED);
+        g.setColor(Color.BLUE);
         g.fillRect(squareX,squareY,squareW,squareH);
         g.setColor(Color.BLACK);
         g.drawString("This is my custom Panel!",10,20);
